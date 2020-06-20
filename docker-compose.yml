@@ -1,0 +1,24 @@
+version: "3"
+volumes:
+  uploads:
+    external: false
+networks:
+  mysql-dev_dbnet:
+    external: true
+  sepotifay-networks: {}
+services:
+  sepotifay-api:
+    image: "${SEPOTIFAY_IMAGE_ADIT}"
+    restart: always
+    ports:
+      - 7000:8080
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/sepotifay-adit?useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: pascalpass
+    volumes:
+      - uploads:/uploads
+    networks:
+      - mysql-dev_dbnet
+      - sepotifay-networks
